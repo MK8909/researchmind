@@ -16,8 +16,10 @@ from tools import web_search, scrape_url
 
 load_dotenv()
 
-groq_key = st.secrets.get("GROQ_API_KEY") if hasattr(st, "secrets") else None
-groq_key = groq_key or os.getenv("groq_apikey")
+groq_key = None
+if hasattr(st, "secrets"):
+    groq_key = st.secrets.get("GROQ_API_KEY") or st.secrets.get("groq_apikey")
+groq_key = groq_key or os.getenv("GROQ_API_KEY") or os.getenv("groq_apikey")
 
 llm = ChatGroq(
     model="llama-3.3-70b-versatile",
